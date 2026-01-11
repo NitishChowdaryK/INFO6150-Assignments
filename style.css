@@ -85,3 +85,50 @@ thead th {
 tbody tr {
   border-bottom: 1px solid rgba(255, 255, 255, 0.15);
 }
+
+.join-form {
+  max-width: 520px;
+  margin-top: 14px;
+  background-color: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.join-form .field {
+  margin-bottom: 14px;
+}
+
+.join-form label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 6px;
+}
+
+.join-form input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background-color: rgba(0, 0, 0, 0.25);
+  color: #eaf0ff;
+  outline: none;
+}
+
+.join-form input:focus {
+  border-color: rgba(154, 215, 255, 0.8);
+}
+
+.join-form button {
+  padding: 10px 14px;
+  border: none;
+  border-radius: 10px;
+  background-color: #7c5cff;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.join-form button:hover {
+  filter: brightness(1.08);
+}

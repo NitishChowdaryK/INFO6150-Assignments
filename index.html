@@ -99,10 +99,52 @@
       </aside>
     </main>
 
-    <section id="join">
-      <h2>Join a SkillSprint</h2>
-      <p>Reserve your seat for an upcoming session.</p>
-    </section>
+<section id="join">
+  <h2>Join a SkillSprint</h2>
+  <p>
+    Fill out the form below to reserve your seat.
+  </p>
+
+<form class="join-form">
+  <div class="field">
+    <label>
+      Full Name:
+      <input type="text" name="fullName" required />
+    </label>
+  </div>
+
+  <div class="field">
+    <label>
+      Email:
+      <input type="email" name="email" required />
+    </label>
+  </div>
+
+  <div class="field">
+    <label>
+      Password:
+      <input type="password" name="password" minlength="6" required />
+    </label>
+  </div>
+
+  <div class="field">
+    <label>
+      Choose a Topic:
+      <input list="topics" name="topic" required />
+      <datalist id="topics">
+        <option value="Excel Pivot Tables"></option>
+        <option value="Python Pandas Basics"></option>
+        <option value="SQL Joins"></option>
+        <option value="Public Speaking"></option>
+      </datalist>
+    </label>
+  </div>
+
+  <button type="submit">Reserve Seat</button>
+</form>
+
+</section>
+
 
     <section id="contact">
       <h2>Contact</h2>
