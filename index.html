@@ -18,6 +18,7 @@
         <a href="#discover">Discover</a>
         <a href="#schedule">Schedule</a>
         <a href="#join">Join</a>
+        <a href="#media">Media</a>
         <a href="#contact">Contact</a>
       </nav>
     </header>
@@ -43,55 +44,53 @@
     </section>
 
     <main>
-<article id="schedule">
-  <h2>Upcoming SkillSprints</h2>
-  <p>
-    Browse quick learning sessions hosted by students.
-  </p>
+      <article id="schedule">
+        <h2>Upcoming SkillSprints</h2>
+        <p>Browse quick learning sessions hosted by students.</p>
 
-  <table>
-    <caption>SkillSprint Schedule</caption>
+        <table>
+          <caption>
+            SkillSprint Schedule
+          </caption>
 
-    <thead>
-      <tr>
-        <th>Time</th>
-        <th>Topic</th>
-        <th>Level</th>
-        <th>Seats Available</th>
-      </tr>
-    </thead>
+          <thead>
+            <tr>
+              <th>Time</th>
+              <th>Topic</th>
+              <th>Level</th>
+              <th>Seats Available</th>
+            </tr>
+          </thead>
 
-    <tbody>
-      <tr>
-        <td>5:00 PM</td>
-        <td>Excel Pivot Tables</td>
-        <td>Beginner</td>
-        <td>12</td>
-      </tr>
-      <tr>
-        <td>6:15 PM</td>
-        <td>Python Pandas Basics</td>
-        <td>Intermediate</td>
-        <td>15</td>
-      </tr>
-      <tr>
-        <td>7:30 PM</td>
-        <td>Public Speaking Drill</td>
-        <td>Beginner</td>
-        <td>20</td>
-      </tr>
-    </tbody>
-  </table>
-  <details>
-  <summary>What is a SkillSprint?</summary>
-  <p>
-    A SkillSprint is a short learning session with (30–60 minutes)
-    focused on teaching one practical skill with hands-on practice.
-  </p>
-</details>
-
-</article>
-
+          <tbody>
+            <tr>
+              <td>5:00 PM</td>
+              <td>Excel Pivot Tables</td>
+              <td>Beginner</td>
+              <td>12</td>
+            </tr>
+            <tr>
+              <td>6:15 PM</td>
+              <td>Python Pandas Basics</td>
+              <td>Intermediate</td>
+              <td>15</td>
+            </tr>
+            <tr>
+              <td>7:30 PM</td>
+              <td>Public Speaking Drill</td>
+              <td>Beginner</td>
+              <td>20</td>
+            </tr>
+          </tbody>
+        </table>
+        <details>
+          <summary>What is a SkillSprint?</summary>
+          <p>
+            A SkillSprint is a short learning session with (30–60 minutes)
+            focused on teaching one practical skill with hands-on practice.
+          </p>
+        </details>
+      </article>
 
       <aside>
         <h3>Why SkillSprints?</h3>
@@ -99,52 +98,65 @@
       </aside>
     </main>
 
-<section id="join">
-  <h2>Join a SkillSprint</h2>
-  <p>
-    Fill out the form below to reserve your seat.
-  </p>
+    <section id="join">
+      <h2>Join a SkillSprint</h2>
+      <p>Fill out the form below to reserve your seat.</p>
 
-<form class="join-form">
-  <div class="field">
-    <label>
-      Full Name:
-      <input type="text" name="fullName" required />
-    </label>
-  </div>
+      <form class="join-form">
+        <div class="field">
+          <label>
+            Full Name:
+            <input type="text" name="fullName" required />
+          </label>
+        </div>
 
-  <div class="field">
-    <label>
-      Email:
-      <input type="email" name="email" required />
-    </label>
-  </div>
+        <div class="field">
+          <label>
+            Email:
+            <input type="email" name="email" required />
+          </label>
+        </div>
 
-  <div class="field">
-    <label>
-      Password:
-      <input type="password" name="password" minlength="6" required />
-    </label>
-  </div>
+        <div class="field">
+          <label>
+            Password:
+            <input type="password" name="password" minlength="6" required />
+          </label>
+        </div>
 
-  <div class="field">
-    <label>
-      Choose a Topic:
-      <input list="topics" name="topic" required />
-      <datalist id="topics">
-        <option value="Excel Pivot Tables"></option>
-        <option value="Python Pandas Basics"></option>
-        <option value="SQL Joins"></option>
-        <option value="Public Speaking"></option>
-      </datalist>
-    </label>
-  </div>
+        <div class="field">
+          <label>
+            Choose a Topic:
+            <input list="topics" name="topic" required />
+            <datalist id="topics">
+              <option value="Excel Pivot Tables"></option>
+              <option value="Python Pandas Basics"></option>
+              <option value="SQL Joins"></option>
+              <option value="Public Speaking"></option>
+            </datalist>
+          </label>
+        </div>
 
-  <button type="submit">Reserve Seat</button>
-</form>
+        <button type="submit">Reserve Seat</button>
+      </form>
+    </section>
 
-</section>
+    <section id="media">
+      <h2>Media Corner</h2>
+      <p>Preview a SkillSprint through a short audio and video clip.</p>
 
+      <h3>Audio Preview</h3>
+      <audio controls>
+        <source src="file_example_MP3_700KB.mp3" type="audio/mpeg" />
+        Your browser does not support the audio element.
+      </audio>
+
+      <h3>Video Preview</h3>
+      <video controls width="400">
+        <source src="file_example_MP4_480_1_5MG.mp4" type="video/mp4" />
+        Your browser does not support the video element.
+      </video>
+    </section>
 
     <section id="contact">
       <h2>Contact</h2>
