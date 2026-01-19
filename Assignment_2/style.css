@@ -42,3 +42,57 @@ body {
 .nav a:hover {
   background: #f2f2f2;
 }
+
+.hero { padding: 28px 0; }
+
+.hero-grid {
+  display: flex;
+  gap: 16px;
+  align-items: stretch;
+  flex-wrap: wrap;
+}
+
+.hero-card, .profile-card {
+  border: 1px solid #ddd;
+  border-radius: 16px;
+  padding: 16px;
+}
+
+.hero-card {
+  flex: 2;
+  min-width: 320px;
+}
+
+.profile-card {
+  flex: 1;
+  min-width: 260px;
+  padding: 0;
+  overflow: hidden;
+}
+
+.profile-img-wrap { padding: 14px; background: #f7f7ff; }
+.profile-img {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  border-radius: 12px;
+  display: block;
+}
+
+.profile-info { padding: 14px; }
+
+.btn {
+  display: inline-block;
+  padding: 10px 14px;
+  border-radius: 14px;
+  border: 1px solid #ddd;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.btn.primary { background: #222; color: #fff; border-color: #222; }
+.btn.ghost { background: #fff; color: #222; }
+
+.hero-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+
+.muted { color: #666; }
