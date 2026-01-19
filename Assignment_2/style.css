@@ -276,3 +276,57 @@ a:hover{ color:var(--a2); }
 .gallery-item:hover img{
   transform: scale(1.06);
 }
+.two-col{
+  display:flex;
+  gap:16px;
+  align-items:stretch;
+  flex-wrap:wrap;
+  margin-top:14px;
+}
+.two-col > *{
+  flex:1;
+  min-width:280px;
+}
+.contact-form{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  margin-top:6px;
+}
+label{
+  color:var(--muted);
+  font-weight:700;
+  font-size:.92rem;
+}
+input, select, textarea{
+  padding:12px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.16);
+  background: rgba(7,11,23,.45);
+  color:var(--text);
+  outline:none;
+}
+input:focus, select:focus, textarea:focus{
+  border-color: rgba(79,195,255,.65);
+}
+.form-actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:4px;
+}
+/* iPad (768px) */
+@media (max-width: 768px){
+  .brand h1{ font-size: 1.35rem; }
+  .profile-img{ height: 240px; }
+  .exp-table{ min-width: 680px; }
+}
+
+/* Smartphones (375px) */
+@media (max-width: 375px){
+  .brand h1{ font-size: 1.2rem; }
+  .nav a{ padding: 9px 10px; font-size: 0.9rem; }
+  .profile-img{ height: 220px; }
+  .gallery-item img{ height: 165px; }
+  .exp-table{ min-width: 560px; }
+}

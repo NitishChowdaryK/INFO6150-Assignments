@@ -233,6 +233,50 @@
     </div>
   </div>
 </section>
+<section id="contact" class="section">
+  <div class="container">
+    <h2>Contact</h2>
+    <p class="muted">Form demonstrates HTML controls (form + inputs + buttons).</p>
+
+    <div class="two-col">
+      <article class="card">
+        <form class="contact-form" action="#" method="post">
+          <label for="name">Full Name</label>
+          <input id="name" name="name" type="text" placeholder="Your name" required />
+
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" placeholder="you@example.com" required />
+
+          <label for="topic">Topic</label>
+          <select id="topic" name="topic" required>
+            <option value="" selected disabled>Select one</option>
+            <option value="recruiting">Recruiting / Hiring</option>
+            <option value="collab">Project Collaboration</option>
+            <option value="other">Other</option>
+          </select>
+
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="5" placeholder="Write your message..." required></textarea>
+
+          <div class="form-actions">
+            <button class="btn primary" type="submit">Send Message</button>
+            <button class="btn ghost" type="reset">Reset</button>
+          </div>
+        </form>
+      </article>
+
+      <aside class="card">
+        <h3>Direct Info</h3>
+        <p class="muted">
+          Email: <a href="mailto:kolupoti.n@northeastern.edu">kolupoti.n@northeastern.edu</a><br />
+          Phone: 857-540-6394<br />
+          Location: Boston, MA
+        </p>
+        <a class="btn ghost" href="#top">Back to Top</a>
+      </aside>
+    </div>
+  </div>
+</section>
 
 </main>
 
