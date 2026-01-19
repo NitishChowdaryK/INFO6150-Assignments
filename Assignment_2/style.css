@@ -231,3 +231,14 @@ a:hover{ color:var(--a2); }
 .exp-table tbody tr:hover{
   background: rgba(79,195,255,.10);
 }
+
+.testimonials-flex{
+  display:flex;
+  gap:14px;
+  flex-wrap:wrap;
+  margin-top:14px;
+}
+.testimonials-flex .card{
+  flex:1;
+  min-width:260px;
+}
