@@ -13,3 +13,32 @@ body {
 .section {
   padding: 32px 0;
 }
+.site-header {
+  border-bottom: 1px solid #ddd;
+  padding: 14px 0;
+}
+
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.nav {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.nav a {
+  text-decoration: none;
+  color: #222;
+  padding: 6px 10px;
+  border-radius: 10px;
+}
+
+.nav a:hover {
+  background: #f2f2f2;
+}
