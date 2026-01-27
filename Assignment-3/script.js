@@ -16,3 +16,23 @@ var socialMedia = {
 };
 
 var t = new Title("CONNECT WITH ME!");
+
+
+
+
+window.onload = function () {
+
+  const header = document.createElement("h2");
+  header.innerText = "Full Name: Nitish Chowdary Kolupoti | NUID: 002306783";
+  document.body.insertBefore(header, document.body.firstChild);
+
+  const dropDowns = document.querySelectorAll(".dropDownTextArea");
+  dropDowns.forEach(row => {
+    row.style.display = "none";
+  });
+
+  const submitBtn = document.getElementById("button");
+  submitBtn.disabled = true;
+  submitBtn.style.backgroundColor = "gray";
+  submitBtn.style.cursor = "not-allowed";
+};
