@@ -17,16 +17,16 @@ var socialMedia = {
 var t = new Title('CONNECT WITH ME!')
 
 window.onload = function () {
-  const header = document.createElement('h2')
+  var header = document.createElement('h2')
   header.innerText = 'Full Name: Nitish Chowdary Kolupoti | NUID: 002306783'
   document.body.insertBefore(header, document.body.firstChild)
 
-  const dropDowns = document.querySelectorAll('.dropDownTextArea')
+  var dropDowns = document.querySelectorAll('.dropDownTextArea')
   dropDowns.forEach((row) => {
     row.style.display = 'none'
   })
 
-  const submitBtn = document.getElementById('button')
+  var submitBtn = document.getElementById('button')
   submitBtn.disabled = true
   submitBtn.style.backgroundColor = 'gray'
   submitBtn.style.cursor = 'not-allowed'
@@ -34,8 +34,8 @@ window.onload = function () {
 
 document.addEventListener('click', function (event) {
   if (event.target.tagName === 'IMG' && event.target.src.includes('down.png')) {
-    const currentRow = event.target.closest('tr')
-    const detailRow = currentRow.nextElementSibling
+    var currentRow = event.target.closest('tr')
+    var detailRow = currentRow.nextElementSibling
 
     if (detailRow && detailRow.classList.contains('dropDownTextArea')) {
       if (detailRow.style.display === 'none') {
@@ -46,3 +46,88 @@ document.addEventListener('click', function (event) {
     }
   }
 })
+
+document.addEventListener('change', function (event) {
+  if (event.target.type === 'checkbox') {
+    var row = event.target.closest('tr')
+    var submitBtn = document.getElementById('button')
+
+    if (event.target.checked) {
+      row.style.backgroundColor = 'yellow'
+      addActionButtons(row)
+    } else {
+      row.style.backgroundColor = 'white'
+      row.lastElementChild.innerHTML = ''
+    }
+
+    var checkedBoxes = document.querySelectorAll(
+      "#myTable input[type='checkbox']:checked",
+    )
+
+    if (checkedBoxes.length > 0) {
+      submitBtn.disabled = false
+      submitBtn.style.backgroundColor = 'orange'
+      submitBtn.style.cursor = 'pointer'
+    } else {
+      submitBtn.disabled = true
+      submitBtn.style.backgroundColor = 'gray'
+      submitBtn.style.cursor = 'not-allowed'
+    }
+  }
+})
+
+
+
+function addActionButtons(row) {
+  var deleteCell = row.lastElementChild
+
+  deleteCell.innerHTML = ''
+
+  var deleteBtn = document.createElement('button')
+  deleteBtn.innerText = 'Delete'
+
+  deleteBtn.onclick = function () {
+    var studentName = row.children[1].innerText
+
+    var detailRow = row.nextElementSibling
+    if (detailRow && detailRow.classList.contains('dropDownTextArea')) {
+      detailRow.remove()
+    }
+
+    row.remove()
+    alert(studentName + ' Record deleted successfully')
+
+    reorderStudents()
+    updateSubmitState()
+  }
+
+  var editBtn = document.createElement('button')
+  editBtn.innerText = 'Edit'
+
+  editBtn.onclick = function () {
+    var studentName = row.children[1].innerText
+    var input = prompt('Edit details of ' + studentName)
+
+    if (input !== null && input.trim() !== '') {
+      alert(studentName + ' data updated successfully')
+    }
+  }
+
+  deleteCell.appendChild(deleteBtn)
+  deleteCell.appendChild(editBtn)
+}
+
+function updateSubmitState() {
+  var submitBtn = document.getElementById('button')
+  var checkedBoxes = document.querySelectorAll(
+    "#myTable input[type='checkbox']:checked",
+  )
+
+  if (checkedBoxes.length > 0) {
+    submitBtn.disabled = false
+    submitBtn.style.backgroundColor = 'orange'
+  } else {
+    submitBtn.disabled = true
+    submitBtn.style.backgroundColor = 'gray'
+  }
+}
