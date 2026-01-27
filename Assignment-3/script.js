@@ -76,8 +76,6 @@ document.addEventListener('change', function (event) {
   }
 })
 
-
-
 function addActionButtons(row) {
   var deleteCell = row.lastElementChild
 
@@ -129,5 +127,66 @@ function updateSubmitState() {
   } else {
     submitBtn.disabled = true
     submitBtn.style.backgroundColor = 'gray'
+  }
+}
+
+function getStudentRowCount() {
+  var rows = document.querySelectorAll('#myTable tr')
+  var count = 0
+
+  for (var i = 0; i < rows.length; i++) {
+    if (i === 0) continue
+    if (rows[i].classList.contains('dropDownTextArea')) continue
+    count++
+  }
+  return count
+}
+document.getElementById('add').onclick = function () {
+  try {
+    var table = document.getElementById('myTable')
+
+    var nextNum = getStudentRowCount() + 1
+
+    var newRow = table.insertRow(-1)
+
+    var cell0 = newRow.insertCell(0)
+    var cell1 = newRow.insertCell(1)
+    var cell2 = newRow.insertCell(2)
+    var cell3 = newRow.insertCell(3)
+    var cell4 = newRow.insertCell(4)
+    var cell5 = newRow.insertCell(5)
+    var cell6 = newRow.insertCell(6)
+    var cell7 = newRow.insertCell(7)
+    var cell8 = newRow.insertCell(8)
+
+    cell0.innerHTML =
+      '<input type="checkbox" /><br /><br /><img src="down.png" width="25px" />'
+    cell1.innerText = 'Student ' + nextNum
+    cell2.innerText = 'Teacher ' + nextNum
+    cell3.innerText = 'Approved'
+    cell4.innerText = 'Fall'
+    cell5.innerText = 'TA'
+    cell6.innerText = String(10000 + nextNum)
+    cell7.innerText = '100%'
+    cell8.innerHTML = ''
+
+    var detailRow = table.insertRow(-1)
+    detailRow.className = 'dropDownTextArea'
+    detailRow.style.display = 'none'
+
+    var detailCell = detailRow.insertCell(0)
+    detailCell.colSpan = 8
+    detailCell.innerHTML =
+      'Advisor:<br /><br />' +
+      'Award Details<br />' +
+      'Summer 1-2014(TA)<br />' +
+      'Budget Number:<br />' +
+      'Tuition Number:<br />' +
+      'Comments:<br /><br /><br />' +
+      'Award Status:<br /><br /><br />'
+
+    alert('Student ' + nextNum + ' Record added successfully')
+  } catch (e) {
+    alert('Error: Record addition failed')
   }
 }
