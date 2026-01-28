@@ -95,7 +95,6 @@ function addActionButtons(row) {
     row.remove()
     alert(studentName + ' Record deleted successfully')
 
-    reorderStudents()
     updateSubmitState()
   }
 
@@ -141,13 +140,33 @@ function getStudentRowCount() {
   }
   return count
 }
+function reorderStudents() {
+  var rows = document.querySelectorAll('#myTable tr')
+  var count = 1
+
+  for (var i = 0; i < rows.length; i++) {
+    if (i === 0) continue
+    if (rows[i].classList.contains('dropDownTextArea')) continue
+
+    rows[i].children[1].innerText = 'Student ' + count
+    rows[i].children[2].innerText = 'Teacher ' + count
+
+    if (rows[i].children[6]) {
+      rows[i].children[6].innerText = String(10000 + count)
+    }
+
+    count++
+  }
+}
+
 document.getElementById('add').onclick = function () {
   try {
     var table = document.getElementById('myTable')
 
-    var nextNum = getStudentRowCount() + 1
+    var nextNum = getNextStudentNumber()
+    var insertIndex = findInsertIndexForStudentNumber(nextNum)
 
-    var newRow = table.insertRow(-1)
+    var newRow = table.insertRow(insertIndex)
 
     var cell0 = newRow.insertCell(0)
     var cell1 = newRow.insertCell(1)
@@ -170,12 +189,12 @@ document.getElementById('add').onclick = function () {
     cell7.innerText = '100%'
     cell8.innerHTML = ''
 
-    var detailRow = table.insertRow(-1)
+    var detailRow = table.insertRow(newRow.rowIndex + 1)
     detailRow.className = 'dropDownTextArea'
     detailRow.style.display = 'none'
 
     var detailCell = detailRow.insertCell(0)
-    detailCell.colSpan = 8
+    detailCell.colSpan = 9
     detailCell.innerHTML =
       '<strong>Student ' +
       nextNum +
@@ -187,6 +206,49 @@ document.getElementById('add').onclick = function () {
 
     alert('Student ' + nextNum + ' Record added successfully')
   } catch (e) {
-    alert('Error: Record addition failed')
+    alert('Error: ' + e.message)
   }
+}
+
+function getNextStudentNumber() {
+  var rows = document.querySelectorAll('#myTable tr')
+  var used = {}
+  var i, row, studentCell, text, num
+
+  for (i = 1; i < rows.length; i++) {
+    row = rows[i]
+    if (row.classList.contains('dropDownTextArea')) continue
+
+    studentCell = row.children[1]
+    if (!studentCell) continue
+
+    text = studentCell.innerText
+    num = parseInt(text.replace('Student', '').trim(), 10)
+
+    if (!isNaN(num)) used[num] = true
+  }
+
+  var candidate = 1
+  while (used[candidate]) candidate++
+  return candidate
+}
+function getStudentNumberFromRow(row) {
+  var text = row.children[1].innerText
+  return parseInt(text.replace('Student', '').trim(), 10)
+}
+
+function findInsertIndexForStudentNumber(num) {
+  var table = document.getElementById('myTable')
+  var rows = table.querySelectorAll('tr')
+
+  for (var i = 1; i < rows.length; i++) {
+    if (rows[i].classList.contains('dropDownTextArea')) continue
+
+    var existingNum = getStudentNumberFromRow(rows[i])
+    if (!isNaN(existingNum) && existingNum > num) {
+      return i
+    }
+  }
+
+  return -1
 }
