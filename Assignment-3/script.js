@@ -177,13 +177,13 @@ document.getElementById('add').onclick = function () {
     var detailCell = detailRow.insertCell(0)
     detailCell.colSpan = 8
     detailCell.innerHTML =
-      'Advisor:<br /><br />' +
-      'Award Details<br />' +
-      'Summer 1-2014(TA)<br />' +
-      'Budget Number:<br />' +
-      'Tuition Number:<br />' +
-      'Comments:<br /><br /><br />' +
-      'Award Status:<br /><br /><br />'
+      '<strong>Student ' +
+      nextNum +
+      ' Details:</strong><br /><br />' +
+      'Award Details: Honors Student<br />' +
+      'Fall 1-2024(TA)<br />' +
+      'Comments: Outstanding<br />' +
+      'Award Status: A'
 
     alert('Student ' + nextNum + ' Record added successfully')
   } catch (e) {
