@@ -15,6 +15,23 @@
       main {
         padding: 50px;
       }
+      .error {
+        color: red;
+        font-size: 12px;
+        display: block;
+        margin-left: 150px;
+        min-height: 16px;
+      }
+
+      input.invalid,
+      textarea.invalid {
+        border: 2px solid red;
+      }
+
+      input.valid,
+      textarea.valid {
+        border: 2px solid green;
+      }
     </style>
   </head>
   <body>
@@ -46,14 +63,17 @@
             id="mrs"
             value="mrs"
             required="required"
-          />Mrs. <br /><br />
+          />Mrs.
+          <small class="error" id="err_title"></small>
+          <br /><br />
           <label for="firstName">First Name*:</label>
           <input
             type="text"
             name="firstName"
             id="firstName"
             placeholder="First Name"
-          />
+          /><small class="error" id="err_firstName"></small>
+
           <br /><br />
 
           <label for="lastName">Last Name*:</label>
@@ -62,8 +82,7 @@
             name="lastName"
             id="lastName"
             placeholder="Last Name"
-          />
-          <br /><br />
+          /><small class="error" id="err_lastName"></small> <br /><br />
 
           <label for="emailId">Email Id*:</label>
           <input
@@ -71,8 +90,7 @@
             name="emailId"
             id="emailId"
             placeholder="yourname@domain.com"
-          />
-          <br /><br />
+          /><small class="error" id="err_emailId"></small> <br /><br />
 
           <label for="phoneNumber">Phone Number*:</label>
           <input
@@ -80,17 +98,19 @@
             name="phoneNumber"
             id="phoneNumber"
             placeholder="xxx-xxx-xxxx"
-          />
-          <br /><br />
+          /><small class="error" id="err_phoneNumber"></small> <br /><br />
 
           <label for="zipcode">ZipCode*:</label>
           <input type="text" name="zipcode" id="zipcode" placeholder="xxxxxx" />
+          <small class="error" id="err_zipcode"></small>
           <br /><br />
 
           <label for="zipcode">How did you hear*:</label>
           <input type="checkbox" name="source" value="facebook" /> Facebook
           <input type="checkbox" name="source" value="google" /> Google
-          <input type="checkbox" name="source" value="yelp" /> Yelp <br /><br />
+          <input type="checkbox" name="source" value="yelp" /> Yelp
+          <small class="error" id="err_source"></small>
+          <br /><br />
 
           <label for="comments">Comments*:</label>
           <textarea
@@ -100,6 +120,7 @@
             rows="5"
             cols="25"
           ></textarea>
+					<small class="error" id="err_comments"></small>
           <br /><br />
           <input type="submit" id="submitBtn" value="Submit" />
           <input type="reset" id="resetBtn" value="Reset" />
