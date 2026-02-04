@@ -77,10 +77,11 @@ function formatPhone(digits) {
   var p2 = digits.slice(3, 6)
   var p3 = digits.slice(6, 10)
 
-  if (digits.length <= 3) return p1
-  if (digits.length <= 6) return p1 + '-' + p2
-  return p1 + '-' + p2 + '-' + p3
+  if (digits.length <= 3) return "(" + p1
+  if (digits.length <= 6) return "(" + p1 + ") " + p2
+  return "(" + p1 + ") " + p2 + "-" + p3
 }
+
 
 function setError(inputEl, errEl, msg) {
   if (errEl) errEl.innerText = msg
@@ -186,8 +187,9 @@ function isValidZip(zip) {
 }
 
 function isValidPhone(phone) {
-  return /^\d{3}-\d{3}-\d{4}$/.test(phone.trim())
+  return /^\(\d{3}\)\s\d{3}-\d{4}$/.test(phone.trim())
 }
+
 
 function validateEmail() {
   var input = document.getElementById('emailId')
@@ -300,7 +302,7 @@ function validateTopicSelect() {
 
 function renderDynamicCheckbox(selectedValue) {
   var area = document.getElementById("dynamicArea");
-  if (!area) return; // ✅ prevents crash if div missing
+  if (!area) return; 
 
   var oldCb = document.getElementById("dynCb");
   var wasChecked = oldCb ? oldCb.checked : false;
@@ -406,6 +408,33 @@ function updateAddress2Counter() {
   counter.style.color = len > 18 ? 'red' : 'black'
 }
 
+function validateAddress2() {
+  var input = document.getElementById('address2')
+  var err = document.getElementById('err_address2')
+  if (!input) return true
+
+  var val = input.value.trim()
+  if (val.length === 0) {
+    if (err) err.innerText = ''
+    input.classList.remove('invalid')
+    input.classList.remove('valid')
+    return true
+  }
+  if (val.length > 20) {
+    setError(input, err, 'Address 2 must be at most 20 characters.')
+    return false
+  }
+  if (!/^[A-Za-z0-9 ]+$/.test(val)) {
+    setError(input, err, 'Address 2 must be alphanumeric only (no special characters).')
+    return false
+  }
+
+  clearError(input, err)
+  return true
+}
+
+
+
 function validateAll() {
   var ok = true
 
@@ -428,4 +457,108 @@ function validateAll() {
 
   setSubmitEnabled(ok)
   return ok
+}
+
+var submissions = [];
+
+document.addEventListener("DOMContentLoaded", function () {
+  var form = document.getElementById("feedbackForm");
+  if (!form) return;
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    if (!validateAll()) return;
+
+    // collect values
+    var title = (document.querySelector("input[name='title']:checked") || {}).value || "";
+    var firstName = document.getElementById("firstName").value.trim();
+    var lastName = document.getElementById("lastName").value.trim();
+    var emailId = document.getElementById("emailId").value.trim();
+    var phoneNumber = document.getElementById("phoneNumber").value.trim();
+    var zipcode = document.getElementById("zipcode").value.trim();
+    var address2 = (document.getElementById("address2") || {}).value ? document.getElementById("address2").value.trim() : "";
+
+    var topic = (document.getElementById("topicSelect") || {}).value || "";
+
+    var dynEnabled = document.getElementById("dynCb") ? document.getElementById("dynCb").checked : false;
+    var dynText = document.getElementById("dynText") ? document.getElementById("dynText").value.trim() : "";
+
+    var sources = [];
+    var boxes = document.querySelectorAll("input[name='source']:checked");
+    for (var i = 0; i < boxes.length; i++) sources.push(boxes[i].value);
+
+    var comments = document.getElementById("comments").value.trim();
+
+    submissions.push({
+      title,
+      firstName,
+      lastName,
+      emailId,
+      phoneNumber,
+      zipcode,
+      address2,
+      topic,
+      dynEnabled: dynEnabled ? "Yes" : "No",
+      dynText: dynEnabled ? dynText : "",
+      sources: sources.join(", "),
+      comments
+    });
+
+    renderResultsTable();
+
+    // clear form
+    form.reset();
+
+    // clear dynamic area (checkbox/text)
+    var dynArea = document.getElementById("dynamicArea");
+    if (dynArea) dynArea.innerHTML = "";
+
+    // clear errors + borders
+    var errs = document.querySelectorAll(".error");
+    for (var k = 0; k < errs.length; k++) errs[k].innerText = "";
+
+    var inputs = document.querySelectorAll("input, textarea, select");
+    for (var m = 0; m < inputs.length; m++) {
+      inputs[m].classList.remove("invalid");
+      inputs[m].classList.remove("valid");
+    }
+
+    updateCommentCounter();
+    updateAddress2Counter();
+    setSubmitEnabled(false);
+  });
+});
+
+function renderResultsTable() {
+  var area = document.getElementById("resultsArea");
+  if (!area) return;
+
+  var html = "<h3>Submitted Results</h3>";
+  html += "<table border='1' cellpadding='6' cellspacing='0' style='border-collapse:collapse; width:100%;'>";
+  html += "<tr>" +
+          "<th>Title</th><th>First</th><th>Last</th><th>Email</th><th>Phone</th><th>Zip</th>" +
+          "<th>Address2</th><th>Topic</th><th>Enabled</th><th>Details</th><th>Source</th><th>Comments</th>" +
+          "</tr>";
+
+  for (var i = 0; i < submissions.length; i++) {
+    var s = submissions[i];
+    html += "<tr>" +
+            "<td>" + s.title + "</td>" +
+            "<td>" + s.firstName + "</td>" +
+            "<td>" + s.lastName + "</td>" +
+            "<td>" + s.emailId + "</td>" +
+            "<td>" + s.phoneNumber + "</td>" +
+            "<td>" + s.zipcode + "</td>" +
+            "<td>" + (s.address2 || "") + "</td>" +
+            "<td>" + s.topic + "</td>" +
+            "<td>" + s.dynEnabled + "</td>" +
+            "<td>" + (s.dynText || "") + "</td>" +
+            "<td>" + s.sources + "</td>" +
+            "<td>" + s.comments + "</td>" +
+            "</tr>";
+  }
+
+  html += "</table>";
+  area.innerHTML = html;
 }
