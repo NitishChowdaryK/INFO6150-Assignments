@@ -9,6 +9,10 @@ window.onload = function () {
 
 document.getElementById("firstName").addEventListener("input", validateAll);
 document.getElementById("lastName").addEventListener("input", validateAll);
+document.getElementById("emailId").addEventListener("input", validateAll);
+document.getElementById("phoneNumber").addEventListener("input", validateAll);
+document.getElementById("zipcode").addEventListener("input", validateAll);
+
 
 var titleRadios = document.querySelectorAll("input[name='title']");
 for (var i = 0; i < titleRadios.length; i++) {
@@ -120,7 +124,75 @@ function validateAll() {
   ok = validateTitle() && ok;
   ok = validateFirstName() && ok;
   ok = validateLastName() && ok;
+function isValidNEUEmail(email) {
+  return /^[A-Za-z0-9._%+-]+@northeastern\.edu$/.test(email.trim());
+}
 
+function isValidZip(zip) {
+  return /^\d{5}$/.test(zip.trim());
+}
+
+function isValidPhone(phone) {
+  return /^\d{3}-\d{3}-\d{4}$/.test(phone.trim());
+}
+
+function validateEmail() {
+  var input = document.getElementById("emailId");
+  var err = document.getElementById("err_emailId");
+  var val = input.value.trim();
+
+  if (val.length === 0) {
+    setError(input, err, "Email is required.");
+    return false;
+  }
+  if (!isValidNEUEmail(val)) {
+    setError(input, err, "Email must be a valid @northeastern.edu address.");
+    return false;
+  }
+
+  clearError(input, err);
+  return true;
+}
+
+function validateZip() {
+  var input = document.getElementById("zipcode");
+  var err = document.getElementById("err_zipcode");
+  var val = input.value.trim();
+
+  if (val.length === 0) {
+    setError(input, err, "Zipcode is required.");
+    return false;
+  }
+  if (!isValidZip(val)) {
+    setError(input, err, "Zipcode must be exactly 5 digits.");
+    return false;
+  }
+
+  clearError(input, err);
+  return true;
+}
+
+function validatePhone() {
+  var input = document.getElementById("phoneNumber");
+  var err = document.getElementById("err_phoneNumber");
+  var val = input.value.trim();
+
+  if (val.length === 0) {
+    setError(input, err, "Phone number is required.");
+    return false;
+  }
+  if (!isValidPhone(val)) {
+    setError(input, err, "Phone must be in format xxx-xxx-xxxx.");
+    return false;
+  }
+
+  clearError(input, err);
+  return true;
+}
+
+  ok = validateEmail() && ok;
+  ok = validateZip() && ok;
+  ok = validatePhone() && ok;
   setSubmitEnabled(ok);
   return ok;
 }
