@@ -9,7 +9,13 @@ window.onload = function () {
   document.getElementById('firstName').addEventListener('input', validateAll)
   document.getElementById('lastName').addEventListener('input', validateAll)
   document.getElementById('emailId').addEventListener('input', validateAll)
-  document.getElementById('phoneNumber').addEventListener('input', validateAll)
+var phoneInput = document.getElementById("phoneNumber");
+
+phoneInput.addEventListener("input", function () {
+  phoneInput.value = formatPhone(phoneInput.value);
+  validateAll();
+});
+
   document.getElementById('zipcode').addEventListener('input', validateAll)
   document.getElementById('comments').addEventListener('input', validateAll)
 
@@ -24,6 +30,22 @@ window.onload = function () {
   }
 
   validateAll()
+}
+
+function onlyDigits(str) {
+  return str.replace(/\D/g, "");
+}
+
+function formatPhone(digits) {
+  digits = onlyDigits(digits).slice(0, 10);
+
+  var p1 = digits.slice(0, 3);
+  var p2 = digits.slice(3, 6);
+  var p3 = digits.slice(6, 10);
+
+  if (digits.length <= 3) return p1;
+  if (digits.length <= 6) return p1 + "-" + p2;
+  return p1 + "-" + p2 + "-" + p3;
 }
 
 function setError(inputEl, errEl, msg) {
