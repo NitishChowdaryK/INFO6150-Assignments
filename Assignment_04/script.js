@@ -32,7 +32,6 @@ phoneInput.addEventListener("input", function () {
   var topicSelect = document.getElementById("topicSelect");
 
 topicSelect.addEventListener("change", function () {
-  renderDynamicCheckbox(topicSelect.value);
   validateAll();
 });
 
@@ -157,6 +156,8 @@ function validateAll() {
   ok = validateTitle() && ok
   ok = validateFirstName() && ok
   ok = validateLastName() && ok
+  renderDynamicCheckbox(document.getElementById("topicSelect").value);
+
   function isValidNEUEmail(email) {
     return /^[A-Za-z0-9._%+-]+@northeastern\.edu$/.test(email.trim())
   }
@@ -355,8 +356,8 @@ function validateDynamicText() {
   clearError(input, err);
   return true;
 }
-  ok = validateDynamicText() && ok
-  ok = validateTopicSelect() && ok
+ok = validateTopicSelect() && ok
+ok = validateDynamicText() && ok
 
   ok = validateEmail() && ok
   ok = validateZip() && ok
