@@ -470,7 +470,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (!validateAll()) return;
 
-    // collect values
     var title = (document.querySelector("input[name='title']:checked") || {}).value || "";
     var firstName = document.getElementById("firstName").value.trim();
     var lastName = document.getElementById("lastName").value.trim();
@@ -507,14 +506,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     renderResultsTable();
 
-    // clear form
     form.reset();
 
-    // clear dynamic area (checkbox/text)
     var dynArea = document.getElementById("dynamicArea");
     if (dynArea) dynArea.innerHTML = "";
-
-    // clear errors + borders
     var errs = document.querySelectorAll(".error");
     for (var k = 0; k < errs.length; k++) errs[k].innerText = "";
 
@@ -562,3 +557,5 @@ function renderResultsTable() {
   html += "</table>";
   area.innerHTML = html;
 }
+
+
