@@ -37,6 +37,8 @@ topicSelect.addEventListener("change", function () {
 });
 
 
+
+
   validateAll()
 }
 
@@ -73,7 +75,6 @@ function clearError(inputEl, errEl) {
 }
 
 function isAlphaOnly(val) {
-  // letters and spaces only (no digits, no special chars)
   return /^[A-Za-z ]+$/.test(val.trim())
 }
 
@@ -277,10 +278,43 @@ function validateAll() {
   area.appendChild(cb);
   area.appendChild(label);
 
-  cb.addEventListener("change", function () {
-    validateAll();
-  });
+cb.addEventListener("change", function () {
+  renderDynamicTextField(cb.checked, selectedValue);
+  validateAll();
+});
+
 }
+function renderDynamicTextField(isEnabled, topicValue) {
+  var area = document.getElementById("dynamicArea");
+
+  var old = document.getElementById("dynTextWrap");
+  if (old) old.remove();
+
+  if (!isEnabled) return;
+
+  var wrap = document.createElement("div");
+  wrap.id = "dynTextWrap";
+
+  var br = document.createElement("br");
+
+  var input = document.createElement("input");
+  input.type = "text";
+  input.id = "dynText";
+  input.placeholder = "Enter details for " + topicValue;
+
+  var err = document.createElement("small");
+  err.className = "error";
+  err.id = "err_dynText";
+
+  input.addEventListener("input", validateAll);
+
+  wrap.appendChild(br);
+  wrap.appendChild(input);
+  wrap.appendChild(err);
+
+  area.appendChild(wrap);
+}
+
 function validateTopicSelect() {
   var input = document.getElementById("topicSelect");
   var err = document.getElementById("err_topicSelect");
@@ -293,6 +327,35 @@ function validateTopicSelect() {
   err.innerText = "";
   return true;
 }
+function validateDynamicText() {
+  var cb = document.getElementById("dynCb");
+  var input = document.getElementById("dynText");
+  var err = document.getElementById("err_dynText");
+
+
+  if (!cb || !cb.checked) return true;
+
+
+  if (!input || !err) return false;
+
+  var val = input.value.trim();
+  if (val.length === 0) {
+    setError(input, err, "This field is required.");
+    return false;
+  }
+  if (val.length < 3) {
+    setError(input, err, "Please enter at least 3 characters.");
+    return false;
+  }
+  if (val.length > 50) {
+    setError(input, err, "Please enter at most 50 characters.");
+    return false;
+  }
+
+  clearError(input, err);
+  return true;
+}
+  ok = validateDynamicText() && ok
   ok = validateTopicSelect() && ok
 
   ok = validateEmail() && ok
