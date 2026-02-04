@@ -29,6 +29,14 @@ phoneInput.addEventListener("input", function () {
     titleRadios[i].addEventListener('change', validateAll)
   }
 
+  var topicSelect = document.getElementById("topicSelect");
+
+topicSelect.addEventListener("change", function () {
+  renderDynamicCheckbox(topicSelect.value);
+  validateAll();
+});
+
+
   validateAll()
 }
 
@@ -252,6 +260,40 @@ function validateAll() {
     clearError(input, err)
     return true
   }
+  function renderDynamicCheckbox(selectedValue) {
+  var area = document.getElementById("dynamicArea");
+  area.innerHTML = "";
+
+  if (!selectedValue) return;
+
+  var cb = document.createElement("input");
+  cb.type = "checkbox";
+  cb.id = "dynCb";
+
+  var label = document.createElement("label");
+  label.htmlFor = "dynCb";
+  label.innerText = " Enable " + selectedValue;
+
+  area.appendChild(cb);
+  area.appendChild(label);
+
+  cb.addEventListener("change", function () {
+    validateAll();
+  });
+}
+function validateTopicSelect() {
+  var input = document.getElementById("topicSelect");
+  var err = document.getElementById("err_topicSelect");
+
+  if (!input.value || input.value.trim() === "") {
+    err.innerText = "Please select a topic.";
+    return false;
+  }
+
+  err.innerText = "";
+  return true;
+}
+  ok = validateTopicSelect() && ok
 
   ok = validateEmail() && ok
   ok = validateZip() && ok
