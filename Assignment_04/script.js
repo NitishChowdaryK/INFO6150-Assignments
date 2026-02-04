@@ -23,6 +23,16 @@ window.onload = function () {
     updateCommentCounter()
   })
 
+  var address2 = document.getElementById('address2')
+if (address2) {
+  address2.addEventListener('input', function () {
+    updateAddress2Counter()
+    validateAll()
+  })
+}
+updateAddress2Counter()
+
+
   var sources = document.querySelectorAll("input[name='source']")
   for (var i = 0; i < sources.length; i++) {
     sources[i].addEventListener('change', validateAll)
@@ -311,7 +321,7 @@ function renderDynamicCheckbox(selectedValue) {
   area.appendChild(cb);
   area.appendChild(label);
 
-  renderDynamicTextField(cb.checked, selectedValue); // ✅ only once
+  renderDynamicTextField(cb.checked, selectedValue); 
 
   cb.addEventListener("change", function () {
     renderDynamicTextField(cb.checked, selectedValue);
@@ -386,6 +396,16 @@ function validateDynamicText() {
   return true
 }
 
+function updateAddress2Counter() {
+  var input = document.getElementById('address2')
+  var counter = document.getElementById('address2Counter')
+  if (!input || !counter) return
+
+  var len = input.value.length
+  counter.innerText = len + ' / 20'
+  counter.style.color = len > 18 ? 'red' : 'black'
+}
+
 function validateAll() {
   var ok = true
 
@@ -403,6 +423,8 @@ function validateAll() {
   ok = validatePhone() && ok
   ok = validateSource() && ok
   ok = validateComments() && ok
+  ok = validateAddress2() && ok
+
 
   setSubmitEnabled(ok)
   return ok
