@@ -3,36 +3,225 @@
   <head>
     <title>Feedback</title>
     <style>
-      label {
-        float: left;
-        width: 150px;
-      }
-      #container {
-        width: 700px;
-        margin: auto;
-        background-color: beige;
-      }
-      main {
-        padding: 50px;
-      }
-      .error {
-        color: red;
-        font-size: 12px;
-        display: block;
-        margin-left: 150px;
-        min-height: 16px;
-      }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f3f4f6;
+    color: #111827;
+  }
 
-      input.invalid,
-      textarea.invalid {
-        border: 2px solid red;
-      }
+  #container {
+    width: 760px;
+    margin: 40px auto;
+    background: #fffdf3;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    box-shadow: 0 12px 35px rgba(0,0,0,.08);
+  }
 
-      input.valid,
-      textarea.valid {
-        border: 2px solid green;
-      }
-    </style>
+  main {
+    padding: 40px 45px;
+  }
+
+  h2 {
+    margin: 0 0 6px 0;
+    font-size: 28px;
+  }
+  h3 {
+    margin: 0 0 16px 0;
+    font-weight: 500;
+    color: #374151;
+  }
+
+  #aiBtn {
+    float: right;
+    padding: 10px 14px;
+    background: #111827;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 8px 18px rgba(0,0,0,.14);
+  }
+  #aiBtn:hover { background: #1f2937; }
+  #aiBtn:active { transform: translateY(1px); }
+
+  div[style*="clear: both"] { margin-bottom: 10px; }
+
+  label {
+    float: left;
+    width: 150px;
+    padding-top: 8px;
+    font-weight: 600;
+    color: #111827;
+  }
+
+  input[type="text"],
+  select,
+  textarea {
+    width: calc(100% - 170px);
+    padding: 10px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    outline: none;
+    background: #fff;
+    transition: border-color .15s, box-shadow .15s;
+  }
+
+  textarea { resize: vertical; min-height: 110px; }
+
+  input[type="text"]:focus,
+  select:focus,
+  textarea:focus {
+    border-color: #f59e0b;
+    box-shadow: 0 0 0 4px rgba(245,158,11,.18);
+  }
+
+  input[type="radio"],
+  input[type="checkbox"] {
+    margin: 0 6px 0 10px;
+    transform: translateY(1px);
+  }
+
+  form br + br { line-height: 0; }
+
+  .error {
+    color: #dc2626;
+    font-size: 12px;
+    display: block;
+    margin-left: 150px;
+    min-height: 16px;
+    margin-top: 4px;
+  }
+
+  #commentCounter,
+  #address2Counter {
+    display: inline-block;
+    margin-left: 150px;
+    margin-top: 6px;
+    font-size: 12px;
+    color: #6b7280;
+  }
+
+  input.invalid,
+  textarea.invalid,
+  select.invalid {
+    border: 2px solid #dc2626 !important;
+    box-shadow: 0 0 0 3px rgba(220,38,38,.12);
+  }
+
+  input.valid,
+  textarea.valid,
+  select.valid {
+    border: 2px solid #16a34a !important;
+    box-shadow: 0 0 0 3px rgba(22,163,74,.12);
+  }
+
+  #submitBtn,
+  #resetBtn {
+    margin-left: 150px;
+    padding: 10px 14px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 700;
+  }
+
+  #submitBtn {
+    background: orange; 
+    color: #111827;
+    box-shadow: 0 10px 22px rgba(245,158,11,.22);
+  }
+
+  #resetBtn {
+    margin-left: 10px;
+    background: #e5e7eb;
+    color: #111827;
+  }
+
+  #resetBtn:hover { background: #d1d5db; }
+
+  #dynamicArea {
+    margin-left: 150px;
+    padding: 10px 12px;
+    background: rgba(0,0,0,.03);
+    border: 1px dashed #cbd5e1;
+    border-radius: 10px;
+  }
+
+  #resultsArea {
+    margin-top: 28px;
+    padding-top: 18px;
+    border-top: 1px solid #e5e7eb;
+  }
+
+  #resultsArea h3 {
+    margin: 0 0 10px 0;
+    color: #111827;
+  }
+
+  #resultsArea table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #e5e7eb;
+  }
+
+  #resultsArea th,
+  #resultsArea td {
+    padding: 10px 10px;
+    border-bottom: 1px solid #e5e7eb;
+    text-align: left;
+    font-size: 13px;
+    vertical-align: top;
+  }
+
+  #resultsArea th {
+    background: #111827;
+    color: #fff;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: .3px;
+    text-transform: uppercase;
+  }
+
+  #resultsArea tr:nth-child(even) td {
+    background: #f9fafb;
+  }
+
+  #aiChatBox {
+    border-radius: 12px !important;
+    overflow: hidden;
+  }
+  #aiCloseBtn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-weight: 800;
+  }
+  #aiSendBtn {
+    border: none;
+    background: orange;
+    border-radius: 8px;
+    padding: 8px 10px;
+    cursor: pointer;
+    font-weight: 700;
+  }
+  #aiInput {
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    padding: 8px 10px;
+    outline: none;
+  }
+  #aiInput:focus {
+    border-color: #f59e0b;
+    box-shadow: 0 0 0 4px rgba(245,158,11,.18);
+  }
+</style>
+
   </head>
   <body>
     <div id="container">
