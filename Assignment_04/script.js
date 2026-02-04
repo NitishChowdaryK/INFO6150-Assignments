@@ -36,6 +36,7 @@ window.onload = function () {
   var topicSelect = document.getElementById('topicSelect')
   if (topicSelect) {
     topicSelect.addEventListener('change', function () {
+      renderDynamicCheckbox(topicSelect.value);
       validateAll()
     })
   }
@@ -288,32 +289,38 @@ function validateTopicSelect() {
 }
 
 function renderDynamicCheckbox(selectedValue) {
-  var area = document.getElementById('dynamicArea')
-  if (!area) return
+  var area = document.getElementById("dynamicArea");
+  if (!area) return; // ✅ prevents crash if div missing
 
-  var oldCb = document.getElementById('dynCb')
-  var wasChecked = oldCb ? oldCb.checked : false
+  var oldCb = document.getElementById("dynCb");
+  var wasChecked = oldCb ? oldCb.checked : false;
 
-  area.innerHTML = ''
+  area.innerHTML = "";
 
-  if (!selectedValue) return
+  if (!selectedValue) return;
 
-  var cb = document.createElement('input')
-  cb.type = 'checkbox'
-  cb.id = 'dynCb'
-  cb.checked = wasChecked
+  var cb = document.createElement("input");
+  cb.type = "checkbox";
+  cb.id = "dynCb";
+  cb.checked = wasChecked;
 
-  var label = document.createElement('label')
-  label.htmlFor = 'dynCb'
-  label.innerText = ' Enable ' + selectedValue
+  var label = document.createElement("label");
+  label.htmlFor = "dynCb";
+  label.innerText = " Enable " + selectedValue;
 
-  area.appendChild(cb)
-  area.appendChild(label)
+  area.appendChild(cb);
+  area.appendChild(label);
 
-  cb.addEventListener('change', function () {
-    renderDynamicTextField(cb.checked, selectedValue)
-    validateAll()
-  })
+  renderDynamicTextField(cb.checked, selectedValue); // ✅ only once
+
+  cb.addEventListener("change", function () {
+    renderDynamicTextField(cb.checked, selectedValue);
+    validateAll();
+  });
+
+
+
+
 
   if (cb.checked) {
     renderDynamicTextField(true, selectedValue)
@@ -387,8 +394,7 @@ function validateAll() {
   ok = validateLastName() && ok
 
   var topicEl = document.getElementById('topicSelect')
-  renderDynamicCheckbox(topicEl ? topicEl.value : '')
-
+  
   ok = validateTopicSelect() && ok
   ok = validateDynamicText() && ok
 
