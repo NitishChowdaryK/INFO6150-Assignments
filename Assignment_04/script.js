@@ -9,15 +9,19 @@ window.onload = function () {
   document.getElementById('firstName').addEventListener('input', validateAll)
   document.getElementById('lastName').addEventListener('input', validateAll)
   document.getElementById('emailId').addEventListener('input', validateAll)
-var phoneInput = document.getElementById("phoneNumber");
 
-phoneInput.addEventListener("input", function () {
-  phoneInput.value = formatPhone(phoneInput.value);
-  validateAll();
-});
+  var phoneInput = document.getElementById('phoneNumber')
+  phoneInput.addEventListener('input', function () {
+    phoneInput.value = formatPhone(phoneInput.value)
+    validateAll()
+  })
 
   document.getElementById('zipcode').addEventListener('input', validateAll)
+
   document.getElementById('comments').addEventListener('input', validateAll)
+  document.getElementById('comments').addEventListener('input', function () {
+    updateCommentCounter()
+  })
 
   var sources = document.querySelectorAll("input[name='source']")
   for (var i = 0; i < sources.length; i++) {
@@ -25,40 +29,50 @@ phoneInput.addEventListener("input", function () {
   }
 
   var titleRadios = document.querySelectorAll("input[name='title']")
-  for (var i = 0; i < titleRadios.length; i++) {
-    titleRadios[i].addEventListener('change', validateAll)
+  for (var j = 0; j < titleRadios.length; j++) {
+    titleRadios[j].addEventListener('change', validateAll)
   }
 
-  var topicSelect = document.getElementById("topicSelect");
-
-topicSelect.addEventListener("change", function () {
-  validateAll();
-});
-
-
-
+  var topicSelect = document.getElementById('topicSelect')
+  if (topicSelect) {
+    topicSelect.addEventListener('change', function () {
+      validateAll()
+    })
+  }
 
   validateAll()
+  updateCommentCounter()
+}
+
+function updateCommentCounter() {
+  var textarea = document.getElementById('comments')
+  var counter = document.getElementById('commentCounter')
+
+  if (!textarea || !counter) return
+
+  var len = textarea.value.length
+  counter.innerText = len + ' / 200'
+  counter.style.color = len > 180 ? 'red' : 'black'
 }
 
 function onlyDigits(str) {
-  return str.replace(/\D/g, "");
+  return str.replace(/\D/g, '')
 }
 
 function formatPhone(digits) {
-  digits = onlyDigits(digits).slice(0, 10);
+  digits = onlyDigits(digits).slice(0, 10)
 
-  var p1 = digits.slice(0, 3);
-  var p2 = digits.slice(3, 6);
-  var p3 = digits.slice(6, 10);
+  var p1 = digits.slice(0, 3)
+  var p2 = digits.slice(3, 6)
+  var p3 = digits.slice(6, 10)
 
-  if (digits.length <= 3) return p1;
-  if (digits.length <= 6) return p1 + "-" + p2;
-  return p1 + "-" + p2 + "-" + p3;
+  if (digits.length <= 3) return p1
+  if (digits.length <= 6) return p1 + '-' + p2
+  return p1 + '-' + p2 + '-' + p3
 }
 
 function setError(inputEl, errEl, msg) {
-  errEl.innerText = msg
+  if (errEl) errEl.innerText = msg
   if (inputEl) {
     inputEl.classList.add('invalid')
     inputEl.classList.remove('valid')
@@ -66,7 +80,7 @@ function setError(inputEl, errEl, msg) {
 }
 
 function clearError(inputEl, errEl) {
-  errEl.innerText = ''
+  if (errEl) errEl.innerText = ''
   if (inputEl) {
     inputEl.classList.remove('invalid')
     inputEl.classList.add('valid')
@@ -82,11 +96,11 @@ function validateTitle() {
   var checked = document.querySelector("input[name='title']:checked")
 
   if (!checked) {
-    err.innerText = 'Please select a title.'
+    if (err) err.innerText = 'Please select a title.'
     return false
   }
 
-  err.innerText = ''
+  if (err) err.innerText = ''
   return true
 }
 
@@ -144,10 +158,225 @@ function validateLastName() {
 
 function setSubmitEnabled(enabled) {
   var submitBtn = document.getElementById('submitBtn')
+  if (!submitBtn) return
+
   submitBtn.disabled = !enabled
   submitBtn.style.backgroundColor = enabled ? 'orange' : 'gray'
   submitBtn.style.cursor = enabled ? 'pointer' : 'not-allowed'
   submitBtn.style.opacity = enabled ? '1' : '0.6'
+}
+
+function isValidNEUEmail(email) {
+  return /^[A-Za-z0-9._%+-]+@northeastern\.edu$/.test(email.trim())
+}
+
+function isValidZip(zip) {
+  return /^\d{5}$/.test(zip.trim())
+}
+
+function isValidPhone(phone) {
+  return /^\d{3}-\d{3}-\d{4}$/.test(phone.trim())
+}
+
+function validateEmail() {
+  var input = document.getElementById('emailId')
+  var err = document.getElementById('err_emailId')
+  var val = input.value.trim()
+
+  if (val.length === 0) {
+    setError(input, err, 'Email is required.')
+    return false
+  }
+  if (!isValidNEUEmail(val)) {
+    setError(input, err, 'Email must be a valid @northeastern.edu address.')
+    return false
+  }
+
+  clearError(input, err)
+  return true
+}
+
+function validateZip() {
+  var input = document.getElementById('zipcode')
+  var err = document.getElementById('err_zipcode')
+  var val = input.value.trim()
+
+  if (val.length === 0) {
+    setError(input, err, 'Zipcode is required.')
+    return false
+  }
+  if (!isValidZip(val)) {
+    setError(input, err, 'Zipcode must be exactly 5 digits.')
+    return false
+  }
+
+  clearError(input, err)
+  return true
+}
+
+function validatePhone() {
+  var input = document.getElementById('phoneNumber')
+  var err = document.getElementById('err_phoneNumber')
+  var val = input.value.trim()
+
+  if (val.length === 0) {
+    setError(input, err, 'Phone number is required.')
+    return false
+  }
+  if (!isValidPhone(val)) {
+    setError(input, err, 'Phone must be in format xxx-xxx-xxxx.')
+    return false
+  }
+
+  clearError(input, err)
+  return true
+}
+
+function validateSource() {
+  var err = document.getElementById('err_source')
+  var boxes = document.querySelectorAll("input[name='source']")
+  var checked = 0
+
+  for (var i = 0; i < boxes.length; i++) {
+    if (boxes[i].checked) checked++
+  }
+
+  if (checked === 0) {
+    if (err) err.innerText = 'Please select at least one source.'
+    return false
+  }
+
+  if (err) err.innerText = ''
+  return true
+}
+
+function validateComments() {
+  var input = document.getElementById('comments')
+  var err = document.getElementById('err_comments')
+  var val = input.value.trim()
+
+  if (val.length === 0) {
+    setError(input, err, 'Comments are required.')
+    return false
+  }
+  if (val.length < 5) {
+    setError(input, err, 'Comments must be at least 5 characters.')
+    return false
+  }
+  if (val.length > 200) {
+    setError(input, err, 'Comments must be at most 200 characters.')
+    return false
+  }
+
+  clearError(input, err)
+  return true
+}
+
+function validateTopicSelect() {
+  var input = document.getElementById('topicSelect')
+  var err = document.getElementById('err_topicSelect')
+
+  if (!input) return true 
+
+  if (!input.value || input.value.trim() === '') {
+    if (err) err.innerText = 'Please select a topic.'
+    return false
+  }
+
+  if (err) err.innerText = ''
+  return true
+}
+
+function renderDynamicCheckbox(selectedValue) {
+  var area = document.getElementById('dynamicArea')
+  if (!area) return
+
+  var oldCb = document.getElementById('dynCb')
+  var wasChecked = oldCb ? oldCb.checked : false
+
+  area.innerHTML = ''
+
+  if (!selectedValue) return
+
+  var cb = document.createElement('input')
+  cb.type = 'checkbox'
+  cb.id = 'dynCb'
+  cb.checked = wasChecked
+
+  var label = document.createElement('label')
+  label.htmlFor = 'dynCb'
+  label.innerText = ' Enable ' + selectedValue
+
+  area.appendChild(cb)
+  area.appendChild(label)
+
+  cb.addEventListener('change', function () {
+    renderDynamicTextField(cb.checked, selectedValue)
+    validateAll()
+  })
+
+  if (cb.checked) {
+    renderDynamicTextField(true, selectedValue)
+  }
+}
+
+function renderDynamicTextField(isEnabled, topicValue) {
+  var area = document.getElementById('dynamicArea')
+  if (!area) return
+
+  var old = document.getElementById('dynTextWrap')
+  if (old) old.remove()
+
+  if (!isEnabled) return
+
+  var wrap = document.createElement('div')
+  wrap.id = 'dynTextWrap'
+
+  var br = document.createElement('br')
+
+  var input = document.createElement('input')
+  input.type = 'text'
+  input.id = 'dynText'
+  input.placeholder = 'Enter details for ' + topicValue
+
+  var err = document.createElement('small')
+  err.className = 'error'
+  err.id = 'err_dynText'
+
+  input.addEventListener('input', validateAll)
+
+  wrap.appendChild(br)
+  wrap.appendChild(input)
+  wrap.appendChild(err)
+
+  area.appendChild(wrap)
+}
+
+function validateDynamicText() {
+  var cb = document.getElementById('dynCb')
+  var input = document.getElementById('dynText')
+  var err = document.getElementById('err_dynText')
+
+  if (!cb || !cb.checked) return true
+
+  if (!input || !err) return false
+
+  var val = input.value.trim()
+  if (val.length === 0) {
+    setError(input, err, 'This field is required.')
+    return false
+  }
+  if (val.length < 3) {
+    setError(input, err, 'Please enter at least 3 characters.')
+    return false
+  }
+  if (val.length > 50) {
+    setError(input, err, 'Please enter at most 50 characters.')
+    return false
+  }
+
+  clearError(input, err)
+  return true
 }
 
 function validateAll() {
@@ -156,214 +385,19 @@ function validateAll() {
   ok = validateTitle() && ok
   ok = validateFirstName() && ok
   ok = validateLastName() && ok
-  renderDynamicCheckbox(document.getElementById("topicSelect").value);
 
-  function isValidNEUEmail(email) {
-    return /^[A-Za-z0-9._%+-]+@northeastern\.edu$/.test(email.trim())
-  }
+  var topicEl = document.getElementById('topicSelect')
+  renderDynamicCheckbox(topicEl ? topicEl.value : '')
 
-  function isValidZip(zip) {
-    return /^\d{5}$/.test(zip.trim())
-  }
-
-  function isValidPhone(phone) {
-    return /^\d{3}-\d{3}-\d{4}$/.test(phone.trim())
-  }
-
-  function validateEmail() {
-    var input = document.getElementById('emailId')
-    var err = document.getElementById('err_emailId')
-    var val = input.value.trim()
-
-    if (val.length === 0) {
-      setError(input, err, 'Email is required.')
-      return false
-    }
-    if (!isValidNEUEmail(val)) {
-      setError(input, err, 'Email must be a valid @northeastern.edu address.')
-      return false
-    }
-
-    clearError(input, err)
-    return true
-  }
-
-  function validateZip() {
-    var input = document.getElementById('zipcode')
-    var err = document.getElementById('err_zipcode')
-    var val = input.value.trim()
-
-    if (val.length === 0) {
-      setError(input, err, 'Zipcode is required.')
-      return false
-    }
-    if (!isValidZip(val)) {
-      setError(input, err, 'Zipcode must be exactly 5 digits.')
-      return false
-    }
-
-    clearError(input, err)
-    return true
-  }
-
-  function validatePhone() {
-    var input = document.getElementById('phoneNumber')
-    var err = document.getElementById('err_phoneNumber')
-    var val = input.value.trim()
-
-    if (val.length === 0) {
-      setError(input, err, 'Phone number is required.')
-      return false
-    }
-    if (!isValidPhone(val)) {
-      setError(input, err, 'Phone must be in format xxx-xxx-xxxx.')
-      return false
-    }
-
-    clearError(input, err)
-    return true
-  }
-  function validateSource() {
-    var err = document.getElementById('err_source')
-    var boxes = document.querySelectorAll("input[name='source']")
-    var checked = 0
-
-    for (var i = 0; i < boxes.length; i++) {
-      if (boxes[i].checked) checked++
-    }
-
-    if (checked === 0) {
-      err.innerText = 'Please select at least one source.'
-      return false
-    }
-
-    err.innerText = ''
-    return true
-  }
-
-  function validateComments() {
-    var input = document.getElementById('comments')
-    var err = document.getElementById('err_comments')
-    var val = input.value.trim()
-
-    if (val.length === 0) {
-      setError(input, err, 'Comments are required.')
-      return false
-    }
-    if (val.length < 5) {
-      setError(input, err, 'Comments must be at least 5 characters.')
-      return false
-    }
-    if (val.length > 200) {
-      setError(input, err, 'Comments must be at most 200 characters.')
-      return false
-    }
-
-    clearError(input, err)
-    return true
-  }
-  function renderDynamicCheckbox(selectedValue) {
-  var area = document.getElementById("dynamicArea");
-  area.innerHTML = "";
-
-  if (!selectedValue) return;
-
-  var cb = document.createElement("input");
-  cb.type = "checkbox";
-  cb.id = "dynCb";
-
-  var label = document.createElement("label");
-  label.htmlFor = "dynCb";
-  label.innerText = " Enable " + selectedValue;
-
-  area.appendChild(cb);
-  area.appendChild(label);
-
-cb.addEventListener("change", function () {
-  renderDynamicTextField(cb.checked, selectedValue);
-  validateAll();
-});
-
-}
-function renderDynamicTextField(isEnabled, topicValue) {
-  var area = document.getElementById("dynamicArea");
-
-  var old = document.getElementById("dynTextWrap");
-  if (old) old.remove();
-
-  if (!isEnabled) return;
-
-  var wrap = document.createElement("div");
-  wrap.id = "dynTextWrap";
-
-  var br = document.createElement("br");
-
-  var input = document.createElement("input");
-  input.type = "text";
-  input.id = "dynText";
-  input.placeholder = "Enter details for " + topicValue;
-
-  var err = document.createElement("small");
-  err.className = "error";
-  err.id = "err_dynText";
-
-  input.addEventListener("input", validateAll);
-
-  wrap.appendChild(br);
-  wrap.appendChild(input);
-  wrap.appendChild(err);
-
-  area.appendChild(wrap);
-}
-
-function validateTopicSelect() {
-  var input = document.getElementById("topicSelect");
-  var err = document.getElementById("err_topicSelect");
-
-  if (!input.value || input.value.trim() === "") {
-    err.innerText = "Please select a topic.";
-    return false;
-  }
-
-  err.innerText = "";
-  return true;
-}
-function validateDynamicText() {
-  var cb = document.getElementById("dynCb");
-  var input = document.getElementById("dynText");
-  var err = document.getElementById("err_dynText");
-
-
-  if (!cb || !cb.checked) return true;
-
-
-  if (!input || !err) return false;
-
-  var val = input.value.trim();
-  if (val.length === 0) {
-    setError(input, err, "This field is required.");
-    return false;
-  }
-  if (val.length < 3) {
-    setError(input, err, "Please enter at least 3 characters.");
-    return false;
-  }
-  if (val.length > 50) {
-    setError(input, err, "Please enter at most 50 characters.");
-    return false;
-  }
-
-  clearError(input, err);
-  return true;
-}
-ok = validateTopicSelect() && ok
-ok = validateDynamicText() && ok
+  ok = validateTopicSelect() && ok
+  ok = validateDynamicText() && ok
 
   ok = validateEmail() && ok
   ok = validateZip() && ok
   ok = validatePhone() && ok
   ok = validateSource() && ok
   ok = validateComments() && ok
+
   setSubmitEnabled(ok)
   return ok
 }

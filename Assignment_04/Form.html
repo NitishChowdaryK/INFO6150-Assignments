@@ -104,21 +104,20 @@
           <input type="text" name="zipcode" id="zipcode" placeholder="xxxxxx" />
           <small class="error" id="err_zipcode"></small>
           <br /><br />
-					<label for="topicSelect">Topic*:</label>
-<select id="topicSelect" name="topicSelect">
-  <option value="">--Select--</option>
-  <option value="Email Updates">Email Updates</option>
-  <option value="SMS Alerts">SMS Alerts</option>
-  <option value="Scholarship">Scholarship</option>
-  <option value="Housing">Housing</option>
-  <option value="Registration">Registration</option>
-</select>
-<small class="error" id="err_topicSelect"></small>
-<br /><br />
+          <label for="topicSelect">Topic*:</label>
+          <select id="topicSelect" name="topicSelect">
+            <option value="">--Select--</option>
+            <option value="Email Updates">Email Updates</option>
+            <option value="SMS Alerts">SMS Alerts</option>
+            <option value="Scholarship">Scholarship</option>
+            <option value="Housing">Housing</option>
+            <option value="Registration">Registration</option>
+          </select>
+          <small class="error" id="err_topicSelect"></small>
+          <br /><br />
 
-<div id="dynamicArea"></div>
-<br />
-
+          <div id="dynamicArea"></div>
+          <br />
 
           <label for="zipcode">How did you hear*:</label>
           <input type="checkbox" name="source" value="facebook" /> Facebook
@@ -135,6 +134,7 @@
             rows="5"
             cols="25"
           ></textarea>
+          <small id="commentCounter">0 / 200</small>
           <small class="error" id="err_comments"></small>
           <br /><br />
           <input type="submit" id="submitBtn" value="Submit" />
