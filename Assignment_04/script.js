@@ -24,14 +24,13 @@ window.onload = function () {
   })
 
   var address2 = document.getElementById('address2')
-if (address2) {
-  address2.addEventListener('input', function () {
-    updateAddress2Counter()
-    validateAll()
-  })
-}
-updateAddress2Counter()
-
+  if (address2) {
+    address2.addEventListener('input', function () {
+      updateAddress2Counter()
+      validateAll()
+    })
+  }
+  updateAddress2Counter()
 
   var sources = document.querySelectorAll("input[name='source']")
   for (var i = 0; i < sources.length; i++) {
@@ -46,7 +45,7 @@ updateAddress2Counter()
   var topicSelect = document.getElementById('topicSelect')
   if (topicSelect) {
     topicSelect.addEventListener('change', function () {
-      renderDynamicCheckbox(topicSelect.value);
+      renderDynamicCheckbox(topicSelect.value)
       validateAll()
     })
   }
@@ -77,11 +76,10 @@ function formatPhone(digits) {
   var p2 = digits.slice(3, 6)
   var p3 = digits.slice(6, 10)
 
-  if (digits.length <= 3) return "(" + p1
-  if (digits.length <= 6) return "(" + p1 + ") " + p2
-  return "(" + p1 + ") " + p2 + "-" + p3
+  if (digits.length <= 3) return '(' + p1
+  if (digits.length <= 6) return '(' + p1 + ') ' + p2
+  return '(' + p1 + ') ' + p2 + '-' + p3
 }
-
 
 function setError(inputEl, errEl, msg) {
   if (errEl) errEl.innerText = msg
@@ -190,7 +188,6 @@ function isValidPhone(phone) {
   return /^\(\d{3}\)\s\d{3}-\d{4}$/.test(phone.trim())
 }
 
-
 function validateEmail() {
   var input = document.getElementById('emailId')
   var err = document.getElementById('err_emailId')
@@ -289,7 +286,7 @@ function validateTopicSelect() {
   var input = document.getElementById('topicSelect')
   var err = document.getElementById('err_topicSelect')
 
-  if (!input) return true 
+  if (!input) return true
 
   if (!input.value || input.value.trim() === '') {
     if (err) err.innerText = 'Please select a topic.'
@@ -301,38 +298,34 @@ function validateTopicSelect() {
 }
 
 function renderDynamicCheckbox(selectedValue) {
-  var area = document.getElementById("dynamicArea");
-  if (!area) return; 
+  var area = document.getElementById('dynamicArea')
+  if (!area) return
 
-  var oldCb = document.getElementById("dynCb");
-  var wasChecked = oldCb ? oldCb.checked : false;
+  var oldCb = document.getElementById('dynCb')
+  var wasChecked = oldCb ? oldCb.checked : false
 
-  area.innerHTML = "";
+  area.innerHTML = ''
 
-  if (!selectedValue) return;
+  if (!selectedValue) return
 
-  var cb = document.createElement("input");
-  cb.type = "checkbox";
-  cb.id = "dynCb";
-  cb.checked = wasChecked;
+  var cb = document.createElement('input')
+  cb.type = 'checkbox'
+  cb.id = 'dynCb'
+  cb.checked = wasChecked
 
-  var label = document.createElement("label");
-  label.htmlFor = "dynCb";
-  label.innerText = " Enable " + selectedValue;
+  var label = document.createElement('label')
+  label.htmlFor = 'dynCb'
+  label.innerText = ' Enable ' + selectedValue
 
-  area.appendChild(cb);
-  area.appendChild(label);
+  area.appendChild(cb)
+  area.appendChild(label)
 
-  renderDynamicTextField(cb.checked, selectedValue); 
+  renderDynamicTextField(cb.checked, selectedValue)
 
-  cb.addEventListener("change", function () {
-    renderDynamicTextField(cb.checked, selectedValue);
-    validateAll();
-  });
-
-
-
-
+  cb.addEventListener('change', function () {
+    renderDynamicTextField(cb.checked, selectedValue)
+    validateAll()
+  })
 
   if (cb.checked) {
     renderDynamicTextField(true, selectedValue)
@@ -425,15 +418,17 @@ function validateAddress2() {
     return false
   }
   if (!/^[A-Za-z0-9 ]+$/.test(val)) {
-    setError(input, err, 'Address 2 must be alphanumeric only (no special characters).')
+    setError(
+      input,
+      err,
+      'Address 2 must be alphanumeric only (no special characters).',
+    )
     return false
   }
 
   clearError(input, err)
   return true
 }
-
-
 
 function validateAll() {
   var ok = true
@@ -443,7 +438,7 @@ function validateAll() {
   ok = validateLastName() && ok
 
   var topicEl = document.getElementById('topicSelect')
-  
+
   ok = validateTopicSelect() && ok
   ok = validateDynamicText() && ok
 
@@ -454,40 +449,46 @@ function validateAll() {
   ok = validateComments() && ok
   ok = validateAddress2() && ok
 
-
   setSubmitEnabled(ok)
   return ok
 }
 
-var submissions = [];
+var submissions = []
 
-document.addEventListener("DOMContentLoaded", function () {
-  var form = document.getElementById("feedbackForm");
-  if (!form) return;
+document.addEventListener('DOMContentLoaded', function () {
+  var form = document.getElementById('feedbackForm')
+  if (!form) return
 
-  form.addEventListener("submit", function (e) {
-    e.preventDefault();
+  form.addEventListener('submit', function (e) {
+    e.preventDefault()
 
-    if (!validateAll()) return;
+    if (!validateAll()) return
 
-    var title = (document.querySelector("input[name='title']:checked") || {}).value || "";
-    var firstName = document.getElementById("firstName").value.trim();
-    var lastName = document.getElementById("lastName").value.trim();
-    var emailId = document.getElementById("emailId").value.trim();
-    var phoneNumber = document.getElementById("phoneNumber").value.trim();
-    var zipcode = document.getElementById("zipcode").value.trim();
-    var address2 = (document.getElementById("address2") || {}).value ? document.getElementById("address2").value.trim() : "";
+    var title =
+      (document.querySelector("input[name='title']:checked") || {}).value || ''
+    var firstName = document.getElementById('firstName').value.trim()
+    var lastName = document.getElementById('lastName').value.trim()
+    var emailId = document.getElementById('emailId').value.trim()
+    var phoneNumber = document.getElementById('phoneNumber').value.trim()
+    var zipcode = document.getElementById('zipcode').value.trim()
+    var address2 = (document.getElementById('address2') || {}).value
+      ? document.getElementById('address2').value.trim()
+      : ''
 
-    var topic = (document.getElementById("topicSelect") || {}).value || "";
+    var topic = (document.getElementById('topicSelect') || {}).value || ''
 
-    var dynEnabled = document.getElementById("dynCb") ? document.getElementById("dynCb").checked : false;
-    var dynText = document.getElementById("dynText") ? document.getElementById("dynText").value.trim() : "";
+    var dynEnabled = document.getElementById('dynCb')
+      ? document.getElementById('dynCb').checked
+      : false
+    var dynText = document.getElementById('dynText')
+      ? document.getElementById('dynText').value.trim()
+      : ''
 
-    var sources = [];
-    var boxes = document.querySelectorAll("input[name='source']:checked");
-    for (var i = 0; i < boxes.length; i++) sources.push(boxes[i].value);
+    var sources = []
+    var boxes = document.querySelectorAll("input[name='source']:checked")
+    for (var i = 0; i < boxes.length; i++) sources.push(boxes[i].value)
 
-    var comments = document.getElementById("comments").value.trim();
+    var comments = document.getElementById('comments').value.trim()
 
     submissions.push({
       title,
@@ -498,64 +499,174 @@ document.addEventListener("DOMContentLoaded", function () {
       zipcode,
       address2,
       topic,
-      dynEnabled: dynEnabled ? "Yes" : "No",
-      dynText: dynEnabled ? dynText : "",
-      sources: sources.join(", "),
-      comments
-    });
+      dynEnabled: dynEnabled ? 'Yes' : 'No',
+      dynText: dynEnabled ? dynText : '',
+      sources: sources.join(', '),
+      comments,
+    })
 
-    renderResultsTable();
+    renderResultsTable()
 
-    form.reset();
+    form.reset()
 
-    var dynArea = document.getElementById("dynamicArea");
-    if (dynArea) dynArea.innerHTML = "";
-    var errs = document.querySelectorAll(".error");
-    for (var k = 0; k < errs.length; k++) errs[k].innerText = "";
+    var dynArea = document.getElementById('dynamicArea')
+    if (dynArea) dynArea.innerHTML = ''
+    var errs = document.querySelectorAll('.error')
+    for (var k = 0; k < errs.length; k++) errs[k].innerText = ''
 
-    var inputs = document.querySelectorAll("input, textarea, select");
+    var inputs = document.querySelectorAll('input, textarea, select')
     for (var m = 0; m < inputs.length; m++) {
-      inputs[m].classList.remove("invalid");
-      inputs[m].classList.remove("valid");
+      inputs[m].classList.remove('invalid')
+      inputs[m].classList.remove('valid')
     }
 
-    updateCommentCounter();
-    updateAddress2Counter();
-    setSubmitEnabled(false);
-  });
-});
+    updateCommentCounter()
+    updateAddress2Counter()
+    setSubmitEnabled(false)
+  })
+})
 
 function renderResultsTable() {
-  var area = document.getElementById("resultsArea");
-  if (!area) return;
+  var area = document.getElementById('resultsArea')
+  if (!area) return
 
-  var html = "<h3>Submitted Results</h3>";
-  html += "<table border='1' cellpadding='6' cellspacing='0' style='border-collapse:collapse; width:100%;'>";
-  html += "<tr>" +
-          "<th>Title</th><th>First</th><th>Last</th><th>Email</th><th>Phone</th><th>Zip</th>" +
-          "<th>Address2</th><th>Topic</th><th>Enabled</th><th>Details</th><th>Source</th><th>Comments</th>" +
-          "</tr>";
+  var html = '<h3>Submitted Results</h3>'
+  html +=
+    "<table border='1' cellpadding='6' cellspacing='0' style='border-collapse:collapse; width:100%;'>"
+  html +=
+    '<tr>' +
+    '<th>Title</th><th>First</th><th>Last</th><th>Email</th><th>Phone</th><th>Zip</th>' +
+    '<th>Address2</th><th>Topic</th><th>Enabled</th><th>Details</th><th>Source</th><th>Comments</th>' +
+    '</tr>'
 
   for (var i = 0; i < submissions.length; i++) {
-    var s = submissions[i];
-    html += "<tr>" +
-            "<td>" + s.title + "</td>" +
-            "<td>" + s.firstName + "</td>" +
-            "<td>" + s.lastName + "</td>" +
-            "<td>" + s.emailId + "</td>" +
-            "<td>" + s.phoneNumber + "</td>" +
-            "<td>" + s.zipcode + "</td>" +
-            "<td>" + (s.address2 || "") + "</td>" +
-            "<td>" + s.topic + "</td>" +
-            "<td>" + s.dynEnabled + "</td>" +
-            "<td>" + (s.dynText || "") + "</td>" +
-            "<td>" + s.sources + "</td>" +
-            "<td>" + s.comments + "</td>" +
-            "</tr>";
+    var s = submissions[i]
+    html +=
+      '<tr>' +
+      '<td>' +
+      s.title +
+      '</td>' +
+      '<td>' +
+      s.firstName +
+      '</td>' +
+      '<td>' +
+      s.lastName +
+      '</td>' +
+      '<td>' +
+      s.emailId +
+      '</td>' +
+      '<td>' +
+      s.phoneNumber +
+      '</td>' +
+      '<td>' +
+      s.zipcode +
+      '</td>' +
+      '<td>' +
+      (s.address2 || '') +
+      '</td>' +
+      '<td>' +
+      s.topic +
+      '</td>' +
+      '<td>' +
+      s.dynEnabled +
+      '</td>' +
+      '<td>' +
+      (s.dynText || '') +
+      '</td>' +
+      '<td>' +
+      s.sources +
+      '</td>' +
+      '<td>' +
+      s.comments +
+      '</td>' +
+      '</tr>'
   }
 
-  html += "</table>";
-  area.innerHTML = html;
+  html += '</table>'
+  area.innerHTML = html
 }
 
+document.addEventListener('DOMContentLoaded', function () {
+  var aiBtn = document.getElementById('aiBtn')
+  var aiChatBox = document.getElementById('aiChatBox')
+  var aiCloseBtn = document.getElementById('aiCloseBtn')
+  var aiSendBtn = document.getElementById('aiSendBtn')
+  var aiInput = document.getElementById('aiInput')
+  var aiMessages = document.getElementById('aiMessages')
 
+  if (
+    !aiBtn ||
+    !aiChatBox ||
+    !aiCloseBtn ||
+    !aiSendBtn ||
+    !aiInput ||
+    !aiMessages
+  )
+    return
+
+  aiBtn.addEventListener('click', function () {
+    aiChatBox.style.display = 'block'
+    aiInput.focus()
+  })
+
+  aiCloseBtn.addEventListener('click', function () {
+    aiChatBox.style.display = 'none'
+  })
+
+  aiSendBtn.addEventListener('click', function () {
+    sendAIMessage()
+  })
+
+  aiInput.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') {
+      e.preventDefault()
+      sendAIMessage()
+    }
+  })
+
+  function addMsg(sender, text) {
+    var div = document.createElement('div')
+    div.style.marginBottom = '8px'
+    div.innerHTML = '<b>' + sender + ':</b> ' + text
+    aiMessages.appendChild(div)
+    aiMessages.scrollTop = aiMessages.scrollHeight
+  }
+
+  function getAIReply(q) {
+    var text = q.toLowerCase()
+    if (text.includes('email')) {
+      return 'You must use your Northeastern email (example: student@northeastern.edu).'
+    }
+    if (text.includes('phone') || text.includes('number')) {
+      return 'Phone number must be in the format (XXX) XXX-XXXX.'
+    }
+    if (text.includes('zip')) {
+      return 'Zip code must be exactly 5 digits.'
+    }
+    if (text.includes('required') || text.includes('mandatory')) {
+      return 'All fields are required except Street Address 2 (Address 2).'
+    }
+    if (
+      text.includes('address 2') ||
+      text.includes('street address 2') ||
+      text.includes('optional')
+    ) {
+      return 'Street Address 2 is optional. If left blank, it will remain empty in the results table.'
+    }
+
+    return 'Sorry, I don’t know that yet. Please check the instructions.'
+  }
+
+  function sendAIMessage() {
+    var q = aiInput.value.trim()
+    if (q.length === 0) return
+
+    addMsg('You', q)
+
+    var reply = getAIReply(q)
+    addMsg('AI', reply)
+
+    aiInput.value = ''
+    aiInput.focus()
+  }
+})

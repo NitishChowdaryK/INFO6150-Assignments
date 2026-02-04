@@ -37,6 +37,65 @@
   <body>
     <div id="container">
       <main>
+        <button
+          type="button"
+          id="aiBtn"
+          style="float: right; margin-bottom: 10px"
+        >
+          AI Assistant
+        </button>
+
+        <div
+          id="aiChatBox"
+          style="
+            display: none;
+            position: fixed;
+            top: 80px;
+            right: 30px;
+            width: 300px;
+            background: #fff;
+            border: 1px solid #999;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            z-index: 9999;
+          "
+        >
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+            "
+          >
+            <strong>AI Assistant</strong>
+            <button type="button" id="aiCloseBtn">X</button>
+          </div>
+
+          <div
+            id="aiMessages"
+            style="
+              margin-top: 10px;
+              height: 220px;
+              overflow-y: auto;
+              border: 1px solid #ddd;
+              padding: 8px;
+              font-size: 14px;
+              background: #fafafa;
+            "
+          ></div>
+
+          <div style="display: flex; gap: 6px; margin-top: 8px">
+            <input
+              type="text"
+              id="aiInput"
+              placeholder="Ask a question..."
+              style="flex: 1"
+            />
+            <button type="button" id="aiSendBtn">Send</button>
+          </div>
+        </div>
+        <div style="clear: both"></div>
+
         <h2>Feedback</h2>
         <h3>Love something? Hate something? Let us know!</h3>
         Note : Fields marked with an asterisk(*) are mandatory
@@ -135,7 +194,6 @@
           <input type="checkbox" name="source" value="yelp" /> Yelp
           <small class="error" id="err_source"></small>
           <br /><br />
-
           <label for="comments">Comments*:</label>
           <textarea
             name="text"
@@ -152,6 +210,7 @@
 
           <br /><br />
         </form>
+        <div id="resultsArea"></div>
       </main>
     </div>
 
