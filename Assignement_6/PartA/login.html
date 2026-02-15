@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h2>Login</h2>
+
+    <label>Email</label>
+    <input type="text" id="email" />
+    <div class="error" id="emailError"></div>
+
+    <label>Password</label>
+    <input type="password" id="password" />
+    <div class="error" id="passwordError"></div>
+
+    <div class="rememberRow">
+      <input type="checkbox" id="remember" />
+      <label for="remember" style="margin:0;">Remember Me</label>
+    </div>
+
+    <button id="loginBtn" disabled>Login</button>
+    <div class="error" id="loginError"></div>
+    <div class="success" id="successMsg"></div>
+  </div>
+
+  <script src="login.js"></script>
+</body>
+</html>
