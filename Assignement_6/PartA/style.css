@@ -1,0 +1,210 @@
+:root {
+  --bg: #f6f7fb;
+  --card: #ffffff;
+  --text: #111827;
+  --muted: #6b7280;
+  --border: #e5e7eb;
+
+  --primary: #2563eb;
+  --primary-hover: #1d4ed8;
+
+  --danger: #dc2626;
+  --success: #16a34a;
+
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family:
+    system-ui,
+    -apple-system,
+    Segoe UI,
+    Roboto,
+    Arial,
+    sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.container {
+  width: min(520px, calc(100% - 28px));
+  margin: 40px auto;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  padding: 22px;
+}
+
+h2 {
+  margin: 0 0 14px;
+  font-size: 22px;
+  letter-spacing: 0.2px;
+}
+
+label {
+  display: block;
+  margin-top: 12px;
+  margin-bottom: 6px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+input[type='text'],
+input[type='password'] {
+  width: 100%;
+  padding: 11px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-size: 14px;
+  outline: none;
+  background: #fff;
+}
+
+input:focus {
+  border-color: #c7d2fe;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+}
+
+input:disabled {
+  background: #f3f4f6;
+  color: var(--muted);
+}
+
+.error {
+  min-height: 18px;
+  color: var(--danger);
+  font-size: 13px;
+  margin-top: 6px;
+}
+
+.success {
+  min-height: 18px;
+  color: var(--success);
+  font-size: 13px;
+  margin-top: 10px;
+  font-weight: 700;
+}
+
+#loginBtn {
+  width: 100%;
+  margin-top: 14px;
+  padding: 11px 14px;
+  border: none;
+  border-radius: 10px;
+  background: var(--primary);
+  color: #fff;
+  font-weight: 800;
+  cursor: pointer;
+  transition:
+    transform 0.05s ease,
+    background 0.2s ease,
+    opacity 0.2s ease;
+}
+
+#loginBtn:hover {
+  background: var(--primary-hover);
+}
+#loginBtn:active {
+  transform: translateY(1px);
+}
+
+#loginBtn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.rememberRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.headerRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+#welcome {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 900;
+}
+
+#logout {
+  border: none;
+  border-radius: 10px;
+  padding: 10px 12px;
+  background: #111827;
+  color: white;
+  font-weight: 800;
+  cursor: pointer;
+  transition:
+    opacity 0.2s ease,
+    transform 0.05s ease;
+}
+
+#logout:hover {
+  opacity: 0.9;
+}
+#logout:active {
+  transform: translateY(1px);
+}
+
+.btn-group {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
+
+.btn-group button {
+  flex: 1;
+  min-width: 120px;
+  border: none;
+  border-radius: 10px;
+  padding: 11px 12px;
+  background: var(--primary);
+  color: white;
+  font-weight: 800;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    transform 0.05s ease;
+}
+
+.btn-group button:hover {
+  background: var(--primary-hover);
+}
+.btn-group button:active {
+  transform: translateY(1px);
+}
+
+#result {
+  background: #f9fafb;
+  font-weight: 800;
+}
+
+@media (max-width: 420px) {
+  .container {
+    margin: 18px auto;
+    padding: 18px;
+  }
+  h2 {
+    font-size: 20px;
+  }
+  .btn-group button {
+    min-width: 100%;
+  }
+}
