@@ -1,0 +1,17 @@
+.navbar {
+  @include flex-center(18px);
+  padding: 16px 20px;
+  background: linear-gradient(90deg, $primary-color, $secondary-color);
+
+  a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    padding: 8px 12px;
+    border-radius: 10px;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+  }
+}
