@@ -1,0 +1,15 @@
+$variant: "card";
+
+.#{$variant} {
+  @extend %surface;
+  @include card-style;
+
+  font-weight: 700;
+  padding: rem(18);
+  transition: transform 150ms ease, box-shadow 150ms ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 26px rgba(0, 0, 0, 0.16);
+  }
+}
