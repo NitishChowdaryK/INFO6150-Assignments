@@ -99,7 +99,7 @@ const getAllUsers = async (req, res) => {
   try {
     const users = await User.find(
       {},
-      { fullName: 1, email: 1, password: 1, _id: 0 },
+      { fullName: 1, email: 1, password: 1, imagePath: 1, _id: 0 },
     )
 
     return res.status(200).json({
