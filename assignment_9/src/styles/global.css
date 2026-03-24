@@ -1,0 +1,17 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f4f6f8;
+}
+
+h1 {
+  margin-bottom: 10px;
+}
+
+p {
+  color: #555;
+}
+
+.container {
+  padding: 30px 60px;
+}
