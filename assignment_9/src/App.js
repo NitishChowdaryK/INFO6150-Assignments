@@ -1,17 +1,58 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import JobListings from "./pages/JobListings";
 import Contact from "./pages/Contact";
 import CompanyShowcase from "./pages/CompanyShowcase";
+import AdminEmployees from "./pages/AdminEmployees";
+import AddJob from "./pages/AddJob";
 import Navbar from "./components/Navbar";
 
 function ProtectedRoute({ children }) {
-  const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 
   if (!isLoggedIn) {
     return <Navigate to="/" replace />;
+  }
+
+  return (
+    <>
+      <Navbar />
+      <div style={{ padding: "20px" }}>{children}</div>
+    </>
+  );
+}
+
+function AdminRoute({ children }) {
+  const { isLoggedIn, user } = useSelector((state) => state.auth);
+
+  if (!isLoggedIn) {
+    return <Navigate to="/" replace />;
+  }
+
+  if (user?.type !== "admin") {
+    return <Navigate to="/home" replace />;
+  }
+
+  return (
+    <>
+      <Navbar />
+      <div style={{ padding: "20px" }}>{children}</div>
+    </>
+  );
+}
+
+function EmployeeRoute({ children }) {
+  const { isLoggedIn, user } = useSelector((state) => state.auth);
+
+  if (!isLoggedIn) {
+    return <Navigate to="/" replace />;
+  }
+
+  if (user?.type !== "employee") {
+    return <Navigate to="/admin/employees" replace />;
   }
 
   return (
@@ -40,36 +81,54 @@ function App() {
         <Route
           path="/about"
           element={
-            <ProtectedRoute>
+            <EmployeeRoute>
               <About />
-            </ProtectedRoute>
+            </EmployeeRoute>
           }
         />
 
         <Route
           path="/jobs"
           element={
-            <ProtectedRoute>
+            <EmployeeRoute>
               <JobListings />
-            </ProtectedRoute>
+            </EmployeeRoute>
           }
         />
 
         <Route
           path="/contact"
           element={
-            <ProtectedRoute>
+            <EmployeeRoute>
               <Contact />
-            </ProtectedRoute>
+            </EmployeeRoute>
           }
         />
 
         <Route
           path="/companies"
           element={
-            <ProtectedRoute>
+            <EmployeeRoute>
               <CompanyShowcase />
-            </ProtectedRoute>
+            </EmployeeRoute>
+          }
+        />
+
+        <Route
+          path="/admin/employees"
+          element={
+            <AdminRoute>
+              <AdminEmployees />
+            </AdminRoute>
+          }
+        />
+
+        <Route
+          path="/add-job"
+          element={
+            <AdminRoute>
+              <AddJob />
+            </AdminRoute>
           }
         />
       </Routes>

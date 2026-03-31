@@ -1,24 +1,31 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { loginUser } from "../services/api";
+import { loginSuccess } from "../redux/authSlice";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
 
     try {
-      await loginUser(email, password);
+      const response = await loginUser(email, password);
 
-      localStorage.setItem("isLoggedIn", "true");
-      localStorage.setItem("userEmail", email);
+      dispatch(loginSuccess(response.user));
 
-      navigate("/home");
+      if (response.user.type === "admin") {
+        navigate("/admin/employees");
+      } else {
+        navigate("/home");
+      }
     } catch (err) {
       setError(
         err.response?.data?.details || "Invalid email or password."

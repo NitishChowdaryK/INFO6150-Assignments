@@ -1,5 +1,7 @@
+import { useSelector } from "react-redux";
+
 function Home() {
-  const userEmail = localStorage.getItem("userEmail");
+  const user = useSelector((state) => state.auth.user);
 
   return (
     <div className="container">
@@ -9,7 +11,7 @@ function Home() {
         job search journey.
       </p>
       <p>
-        Logged in as: <strong>{userEmail}</strong>
+        Logged in as: <strong>{user?.fullName || user?.email || "User"}</strong>
       </p>
     </div>
   );
