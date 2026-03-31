@@ -5,7 +5,21 @@ const SALT_ROUNDS = 10
 
 const createUser = async (req, res) => {
   try {
-    const { fullName, email, password } = req.body
+    const { fullName, email, password, type } = req.body
+
+    if (!fullName || !email || !password || !type) {
+      return res.status(400).json({
+        error: 'Validation failed.',
+        details: 'Full name, email, password, and type are required.',
+      })
+    }
+
+    if (!['admin', 'employee'].includes(type)) {
+      return res.status(400).json({
+        error: 'Validation failed.',
+        details: 'Type must be either admin or employee.',
+      })
+    }
 
     const existingUser = await User.findOne({ email: email.toLowerCase() })
 
@@ -22,12 +36,19 @@ const createUser = async (req, res) => {
       fullName: fullName.trim(),
       email: email.toLowerCase(),
       password: hashedPassword,
+      type,
     })
 
     await user.save()
 
     return res.status(201).json({
       message: 'User created successfully.',
+      user: {
+        fullName: user.fullName,
+        email: user.email,
+        type: user.type,
+        imagePath: user.imagePath,
+      },
     })
   } catch (error) {
     return res.status(500).json({
@@ -39,7 +60,14 @@ const createUser = async (req, res) => {
 
 const editUser = async (req, res) => {
   try {
-    const { email, fullName, password } = req.body
+    const { email, fullName, password, type } = req.body
+
+    if (!email) {
+      return res.status(400).json({
+        error: 'Validation failed.',
+        details: 'Email is required.',
+      })
+    }
 
     const user = await User.findOne({ email: email.toLowerCase() })
 
@@ -57,10 +85,26 @@ const editUser = async (req, res) => {
       user.password = await bcrypt.hash(password, SALT_ROUNDS)
     }
 
+    if (type !== undefined) {
+      if (!['admin', 'employee'].includes(type)) {
+        return res.status(400).json({
+          error: 'Validation failed.',
+          details: 'Type must be either admin or employee.',
+        })
+      }
+      user.type = type
+    }
+
     await user.save()
 
     return res.status(200).json({
       message: 'User updated successfully.',
+      user: {
+        fullName: user.fullName,
+        email: user.email,
+        type: user.type,
+        imagePath: user.imagePath,
+      },
     })
   } catch (error) {
     return res.status(500).json({
@@ -73,6 +117,13 @@ const editUser = async (req, res) => {
 const deleteUser = async (req, res) => {
   try {
     const { email } = req.body
+
+    if (!email) {
+      return res.status(400).json({
+        error: 'Validation failed.',
+        details: 'Email is required.',
+      })
+    }
 
     const deletedUser = await User.findOneAndDelete({
       email: email.toLowerCase(),
@@ -99,7 +150,7 @@ const getAllUsers = async (req, res) => {
   try {
     const users = await User.find(
       {},
-      { fullName: 1, email: 1, password: 1, imagePath: 1, _id: 0 },
+      { fullName: 1, email: 1, type: 1, imagePath: 1, _id: 0 },
     )
 
     return res.status(200).json({
@@ -170,6 +221,13 @@ const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body
 
+    if (!email || !password) {
+      return res.status(400).json({
+        error: 'Validation failed.',
+        details: 'Email and password are required.',
+      })
+    }
+
     const user = await User.findOne({ email: email.toLowerCase() })
 
     if (!user) {
@@ -190,6 +248,12 @@ const loginUser = async (req, res) => {
 
     return res.status(200).json({
       message: 'Authentication successful.',
+      user: {
+        fullName: user.fullName,
+        email: user.email,
+        type: user.type,
+        imagePath: user.imagePath,
+      },
     })
   } catch (error) {
     return res.status(500).json({

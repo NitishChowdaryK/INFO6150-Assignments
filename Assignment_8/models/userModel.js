@@ -18,6 +18,11 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    type: {
+      type: String,
+      required: true,
+      enum: ['admin', 'employee'],
+    },
     imagePath: {
       type: String,
       default: null,
