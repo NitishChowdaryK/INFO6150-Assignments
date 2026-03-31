@@ -6,6 +6,7 @@ const path = require('path')
 
 const connectDB = require('./config/db')
 const userRoutes = require('./routes/userRoutes')
+const jobRoutes = require('./routes/jobRoutes')
 const { swaggerUi, specs } = require('./swagger/swagger')
 
 const app = express()
@@ -19,12 +20,13 @@ app.use(express.urlencoded({ extended: true }))
 app.use('/images', express.static(path.join(__dirname, 'images')))
 
 app.use('/user', userRoutes)
+app.use('/', jobRoutes)
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs))
 
 app.get('/', (req, res) => {
   res.status(200).json({
-    message: 'Assignment 8 API running successfully',
+    message: 'Assignment 10 API running successfully',
   })
 })
 
